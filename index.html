@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>bootstrap hw</title>
+	<link rel="stylesheet" href="./libs/bootstrap.min.css" />
+	<link rel="stylesheet" href="./css/main.css" />
+</head>
+
+<body>
+	<div class="main-container">
+		<div class="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="patients-li router-link" data-component=".patient-list">
+					patients
+					<li class="users-li router-link" data-component=".users-list">
+						users
+					</li>
+			</ul>
+		</div>
+		<div class="content-container container-fluid pt-4 ">
+
+			<div class="patient-list" >
+				<div class="head">
+					<h1 class="head-title">patient</h1>
+					<button class="patient-add btn btn-primary px-3 router-link" data-component=".patient-edit">Add </button>
+                </div>
+			<table id="table" class="table table-striped table-hover table-bordered">
+							<thead>
+								<tr>
+									<th scope="col">ID </th>
+									<th scope="col">Name</th>
+									<th scope="col">email</th>
+									<th scope="col">gender</th>
+									<th scope="col">DOB</th>
+									<th scope="col">Active</th>
+									<th scope="col">Creation</th>
+								</tr>
+							</thead>
+							<tbody class="patient-table-data">  
+							</tbody>
+			</table>
+            </div>
+            <div class="patient-edit" >
+                <h2>patient Edit</h2>
+                <div class="d-flex">
+                <button class="patient-OK btn btn-primary mx-2 router-link" data-component=".patient-list">OK</button>
+                <button class="patient-Cancel btn btn-danger mx-2 router-link" data-component=".patient-list">Cancel</button>
+                </div>
+            </div>
+            <div class="users-list" >
+                <h2>Users List</h2>
+                <button class="users-add btn btn-primary px-3 router-link" data-component=".users-edit">Add </button>
+
+            </div>
+            <div class="users-edit">
+				<h2>Users edit</h2>
+                <div class="d-flex">
+                <button class="users-OK btn btn-primary mx-2 router-link" data-component=".users-list">OK</button>
+                <button class="users-Cancel btn btn-danger mx-2 router-link" data-component=".users-list">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+    <script src="./app/task1_patientsData.js"></script>
+    <script src="./libs/jquery.js"></script>
+    <script src="./libs/bootstrap.min.js"></script>
+    <script src="./app/main.js"></script>
+  </body>
+</html>
