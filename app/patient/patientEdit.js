@@ -1,8 +1,8 @@
 class PatientEdit {
 	init = () => {
-		// $(".patient-save[data-patient-add-edit=Add]").click(this.onAddPatientData)
-		$(".patient-save").click(this.onUpdateTableData)
-	}
+			$(".patient-save").click(this.onChooseRightFunction)
+		}
+	
 	setFormData = (e) => {
 
 		let PatientData = patientList.getcurrentPatientData(e)
@@ -35,31 +35,41 @@ class PatientEdit {
 		}
 		return patientValues
 	}
-
-	onUpdateTableData = () => {
-		let patientValue = this.getFormData()
-		let currentID = patientValue.ID
-		for(let i=0;i<patientsData.length;i++){
-			if(patientsData[i].ID == currentID){
-				patientsData[i].ID = currentID
-				patientsData[i].fname = patientValue.fname
-				patientsData[i].mname = patientValue.mname
-				patientsData[i].lname = patientValue.lname
-				patientsData[i].email = patientValue.email
-				patientsData[i].DOB = patientValue.DOB
-				patientsData[i].gender = patientValue.gender
-				patientsData[i].creationDate = patientValue.creationDate
-				patientsData[i].Active = patientValue.Active
-			}
+	onChooseRightFunction = ()=>{
+		if (patientList.AddOrEdit == "Edit"){
+			this.UpdateTableData()
 		}
-		patientList.RenderTable()
+		else if(patientList.AddOrEdit == "Add"){
+			this.AddPatientData()
+		}
 	}
-	// onAddPatientData = () => {
-	// 	let data = this.getFormData()
-	// 	let templateText = $("#patient-list-template").html()
-	// 	patientList.obj.push(data)
-	// 	let RendertemplateFun = templateEngine.Rendertemplate(templateText, data)
-	// 	$(".patient-table-data").append(RendertemplateFun)
-	// }
+	UpdateTableData = () => {
+			let patientValue = this.getFormData()
+			let currentID = patientValue.ID
+			for(let i=0;i<patientsData.length;i++){
+				if(patientsData[i].ID == currentID){
+					patientsData[i].ID = currentID
+					patientsData[i].fname = patientValue.fname
+					patientsData[i].mname = patientValue.mname
+					patientsData[i].lname = patientValue.lname
+					patientsData[i].email = patientValue.email
+					patientsData[i].DOB = patientValue.DOB
+					patientsData[i].gender = patientValue.gender
+					patientsData[i].creationDate = patientValue.creationDate
+					patientsData[i].Active = patientValue.Active
+				}
+			}
+			patientList.RenderTable()
+			$(".patient-form")[0].reset()
+	}
+		
+	AddPatientData = () => {
+		let data = this.getFormData()
+		let templateText = $("#patient-list-template").html()
+		let RendertemplateFun = templateEngine.Rendertemplate(templateText, data)
+		$(".patient-table-data").append(RendertemplateFun)
+		$(".patient-form")[0].reset()
+	}		
+
 }
 var patientEdit = new PatientEdit()
