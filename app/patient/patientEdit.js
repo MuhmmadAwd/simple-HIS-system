@@ -1,21 +1,27 @@
 class PatientEdit {
-	// constructor(){
-	// 	this.formMode = ""
-	// }
+	constructor(){
+		this.formMode = ""
+	}
 	init = (e) => {
 			$(".patient-save").click(this.onChooseFormMode)
 		}
 
 	open = (e)=>{
-		let patientObj = this.getPatientObj(e)
+		let patientID = patientList.patientID.toString()
+		if(patientID.length > 0){
+			this.formMode = "Edit"
+		}
+		else{
+			this.formMode = "New"
+		}
+		let patientObj = this.getPatientObj()
 		this.loadControlData(patientObj)
 		router.navigate(e)
 	}
 
-	getPatientObj = (e) => {
-		let currentRow = $(e.target).parents("tr")
+	getPatientObj = () => {
+		let currentID = patientList.patientID
 		let PatientObj = null
-		let currentID = currentRow.find(".patient-id").data("id")
 		for(let i=0;i<patientsData.length;i++){
 			if(patientsData[i].ID == currentID){
 				PatientObj = patientsData[i]
@@ -55,16 +61,15 @@ class PatientEdit {
 		return patientValues
 	}
 	onChooseFormMode = (e)=>{
-		console.log()
-		if (patientList.formMode == "Edit"){
+		if (this.formMode == "Edit"){
 			this.UpdateTableData()
 		}
-		else if(patientList.formMode == "New"){
+		else if(this.formMode == "New"){
 			this.AddPatientData()
 		}
 	}
 	UpdateTableData = () => {
-		let patientValue = this.getControlData()
+				let patientValue = this.getControlData()
 		let currentID = patientValue.ID
 		for(let i=0;i<patientsData.length;i++){
 			if(patientsData[i].ID == currentID){

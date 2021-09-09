@@ -1,6 +1,6 @@
 class PatientList {
 	constructor(){
-		this.formMode = ""
+		this.patientID = 0;
 	}
 	init() {
 		this.RenderTable()
@@ -15,15 +15,17 @@ class PatientList {
 		$(document).on("click",".patient-EditBtn",this.onEditCurrentPatient)
 	}
 	AddPatient = () =>{
-		this.formMode = "New"
+		debugger
+		patientEdit.formMode = "New"
 		
 	}
 
 	onEditCurrentPatient = (e) => {
+		debugger
 		$(".table-row").remove()
-		this.formMode = "Edit"
+		let currentRow = $(e.target).parents("tr")
+		this.patientID = currentRow.find(".patient-id").data("id")
 		patientEdit.open(e)
-		patientEdit.init();
 	}
 
 }
