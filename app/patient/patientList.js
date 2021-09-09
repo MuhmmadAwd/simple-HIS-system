@@ -21,24 +21,10 @@ class PatientList {
 	onEditCurrentPatient = (e) => {
 		$(".table-row").remove()
 		this.AddOrEdit = "Edit"
-		this.getcurrentPatientData(e)
-		router.navigate(e)
-		patientEdit.setFormData(e)
+		patientEdit.open(e)
 		patientEdit.init();
 		
 		
-	}
-
-	getcurrentPatientData = (e) => {
-		let currentRow = $(e.target).parents("tr")
-		let currentRowData = null
-		let currentID = currentRow.find(".patient-id").data("id")
-		for(let i=0;i<patientsData.length;i++){
-			if(patientsData[i].ID == currentID){
-				currentRowData = patientsData[i]
-			}
-		}
-		return currentRowData
 	}
 
 }
