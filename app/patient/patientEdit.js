@@ -1,20 +1,12 @@
 class PatientEdit {
-
-	constructor(){
-		this.patientID = 
-		this.formMode = ""
-	}
-
+	// constructor(){
+	// 	this.formMode = ""
+	// }
 	init = (e) => {
 			$(".patient-save").click(this.onChooseFormMode)
 		}
 
 	open = (e)=>{
-		this.patientID = 
-		if(typeof(this.patientID)  == "number"){
-			this.formMode = "Edit"
-		} 
-		this.resetControls()
 		let patientObj = this.getPatientObj(e)
 		this.loadControlData(patientObj)
 		router.navigate(e)
@@ -63,12 +55,11 @@ class PatientEdit {
 		return patientValues
 	}
 	onChooseFormMode = (e)=>{
-		console.log(this.formMode,this.patientID)
-
-		if (this.formMode == "Edit"){
+		console.log()
+		if (patientList.formMode == "Edit"){
 			this.UpdateTableData()
 		}
-		else if(this.formMode == "Add"){
+		else if(patientList.formMode == "New"){
 			this.AddPatientData()
 		}
 	}
@@ -89,16 +80,16 @@ class PatientEdit {
 			}
 		}
 		patientList.RenderTable()
+		this.resetControls()
 	}
 		
 	AddPatientData = () => {
-				console.log("add",data)
 		let data = this.getControlData()
 		let templateText = $("#patient-list-template").html()
 		let RendertemplateFun = templateEngine.Rendertemplate(templateText, data)
 		$(".patient-table-data").append(RendertemplateFun)
-				console.log("add",data)
-
+		console.log("add",data)
+		this.resetControls()
 	}		
 
 	resetControls(){
