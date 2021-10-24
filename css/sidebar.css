@@ -1,0 +1,33 @@
+.sidebar-wrapper {
+  position: fixed;
+  width: 170px;
+  height: 100%;
+  background: #000;
+}
+.sidebar-nav {
+  top: 0;
+  width: 150px;
+  margin-top: 50px;
+  padding: 0px;
+  list-style: none;
+}
+.sidebar-nav li {
+  text-decoration: none;
+  color: #999;
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+.sidebar-nav li:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav li:active,
+.sidebar-nav li:focus {
+  text-decoration: none;
+}
