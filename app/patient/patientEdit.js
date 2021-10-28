@@ -4,14 +4,19 @@ class PatientEdit {
     this.formMode = "";
   }
   init = () => {
-    $(".patient-save").click(this.onSaveClick);
+    this.initEvent();
   };
+  initEvent() {
+    $(".patient-edit .patient-save").click(this.onSaveClick);
+    $(".patient-edit .patient-warning").click(this.onBeforeDeleteClick);
+    $(".patient-delete").click(this.onDeleteClick);
+  }
 
   open(patientID) {
     this.patientID = patientID;
     if (patientID) {
       this.formMode = "Edit";
-      let patientObj = this.getPatientObj(patientID);
+      let patientObj = this.getById(patientID);
       this.LoadControlData(patientObj);
     } else {
       this.formMode = "New";
@@ -19,18 +24,6 @@ class PatientEdit {
     }
 
     router.navigate(".patient-edit");
-  }
-
-  resetControls() {
-    $(".id-input").val("");
-    $(".fname-input").val("");
-    $(".mname-input").val("");
-    $(".lname-input").val("");
-    $(".email-input").val("");
-    $(`.gender-input[value = ""]`);
-    $(".date-input").val("");
-    $(`.active-input[value = ""]`);
-    $(`.form-select option[value = "today"]`).attr("selected", "selected");
   }
 
   GetControlsData = () => {
@@ -75,25 +68,19 @@ class PatientEdit {
   // -----------------------------------------------------------------
 
   onSaveClick = () => {
+    let data = this.GetControlsData();
     if (this.formMode == "Edit") {
-      let patientValue = this.GetControlsData();
-      let currentID = patientValue.ID;
-      for (let i = 0; i < patientsData.length; i++) {
-        if (patientsData[i].ID == currentID) {
-          patientsData[i].ID = currentID;
-          patientsData[i].fname = patientValue.fname;
-          patientsData[i].mname = patientValue.mname;
-          patientsData[i].lname = patientValue.lname;
-          patientsData[i].email = patientValue.email;
-          patientsData[i].DOB = patientValue.DOB;
-          patientsData[i].gender = patientValue.gender;
-          patientsData[i].creationDate = patientValue.creationDate;
-          patientsData[i].Active = patientValue.Active;
-        }
-      }
+      let currentID = data.ID;
+      let index = this.getIndexById(currentID);
+      patientsData[index].fname = data.fname;
+      patientsData[index].mname = data.mname;
+      patientsData[index].lname = data.lname;
+      patientsData[index].email = data.email;
+      patientsData[index].DOB = data.DOB;
+      patientsData[index].gender = data.gender;
+      patientsData[index].Active = data.Active;
     } else if (this.formMode == "New") {
-      let data = this.GetControlsData();
-      data.ID = patientsData[patientsData.length - 1].ID + 1;
+      data.ID = this.getNewID();
       let templateText = $("#patient-list-template").html();
       let RendertemplateFun = templateEngine.Rendertemplate(templateText, data);
       $(".patient-table-data").append(RendertemplateFun);
@@ -101,18 +88,54 @@ class PatientEdit {
     router.navigate(".patient-list");
   };
 
-  getPatientObj = (patientID) => {
-    let PatientObj = null;
+  onBeforeDeleteClick() {
+    $(".warning-alert").show();
+  }
+
+  getById = (patientID) => {
     for (let i = 0; i < patientsData.length; i++) {
       if (patientsData[i].ID == patientID) {
-        PatientObj = patientsData[i];
+        return patientsData[i];
       }
     }
-    return PatientObj;
+  };
+  getIndexById = (patientID) => {
+    for (let i = 0; i < patientsData.length; i++) {
+      if (patientsData[i].ID == patientID) {
+        return i;
+      }
+    }
+  };
+  getNewID = (patientID) => {
+    for (let i = 0; i < patientsData.length; i++) {
+      if (patientsData[i].ID == patientID) {
+        return patientsData[patientsData.length].ID;
+      }
+    }
+  };
+  onDeleteClick = () => {
+    $(".warning-alert").hide();
+    let patientID = this.patientID;
+    let index = this.getIndexById(patientID);
+    let patientObj = patientsData[index];
+    patientsData.splice(index, 1);
+    return patientObj;
   };
 
+  resetControls() {
+    $(".id-input").val("");
+    $(".fname-input").val("");
+    $(".mname-input").val("");
+    $(".lname-input").val("");
+    $(".email-input").val("");
+    $(`.gender-input[value = ""]`);
+    $(".date-input").val("");
+    $(`.active-input[value = ""]`);
+    $(`.form-select option[value = "today"]`).attr("selected", "selected");
+  }
+
   // -------------------------------------------------------------------------
-  // ***********  getPatientObj  *******************
+  // ***********  getById  *******************
   // -------------------------------------------------------------------------
 }
 var patientEdit = new PatientEdit();
