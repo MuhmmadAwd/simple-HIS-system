@@ -10,8 +10,7 @@ class PatientList {
   RenderTable() {
     $(".table-row").remove();
     let templateText = $("#patient-list-template").html();
-    let patientData = dataService.getAll();
-    patientData.forEach((data) => {
+    patientsData.forEach((data) => {
       let RenderTemplate = templateEngine.Rendertemplate(templateText, data);
       $(".patient-table-data").append(RenderTemplate);
     });
