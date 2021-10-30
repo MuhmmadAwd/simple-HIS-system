@@ -1,48 +1,23 @@
 class PatientEdit {
-	constructor(){
-		this.formMode = ""
+	init = () => {
+		// $(".patient-save[data-patient-add-edit=Add]").click(this.onAddPatientData)
+		$(".patient-save").click(this.onUpdateTableData)
 	}
-	init = (e) => {
-			$(".patient-save").click(this.onChooseFormMode)
-		}
+	setFormData = (e) => {
 
-	open = (e)=>{
-		let patientID = patientList.patientID.toString()
-		if(patientID.length > 0){
-			this.formMode = "Edit"
-		}
-		else{
-			this.formMode = "New"
-		}
-		let patientObj = this.getPatientObj()
-		this.loadControlData(patientObj)
-		router.navigate(e)
-	}
-
-	getPatientObj = () => {
-		let currentID = patientList.patientID
-		let PatientObj = null
-		for(let i=0;i<patientsData.length;i++){
-			if(patientsData[i].ID == currentID){
-				PatientObj = patientsData[i]
-			}
-		}
-		return PatientObj
-	}
-
-	loadControlData = (patientObj) => {
-		$(".id-input").val(patientObj.ID)
-		$(".fname-input").val(patientObj.fname)
-		$(".mname-input").val(patientObj.mname)
-		$(".lname-input").val(patientObj.lname)
-		$(".email-input").val(patientObj.email)
-		$(`.gender-input[value = ${patientObj.gender}]`).attr("checked", "checked")
+		let PatientData = patientList.getcurrentPatientData(e)
+		$(".id-input").val(PatientData.ID)
+		$(".fname-input").val(PatientData.fname)
+		$(".mname-input").val(PatientData.mname)
+		$(".lname-input").val(PatientData.lname)
+		$(".email-input").val(PatientData.email)
+		$(`.gender-input[value = ${PatientData.gender}]`).attr("checked", "checked")
 		$(".date-input").val("1954-02-09")
-		$(`.active-input[value = ${patientObj.Active}]`).attr("checked", "checked");
+		$(`.active-input[value = ${PatientData.Active}]`).attr("checked", "checked");
 		$(`.form-select option[value = 1]`).attr("selected", "selected");
 	}
 
-	getControlData = () => {
+	getFormData = () => {
 
 		let idValue = $(".id-input").val()
 		let fnameValue = $(".fname-input").val()
@@ -60,16 +35,9 @@ class PatientEdit {
 		}
 		return patientValues
 	}
-	onChooseFormMode = (e)=>{
-		if (this.formMode == "Edit"){
-			this.UpdateTableData()
-		}
-		else if(this.formMode == "New"){
-			this.AddPatientData()
-		}
-	}
-	UpdateTableData = () => {
-				let patientValue = this.getControlData()
+
+	onUpdateTableData = () => {
+		let patientValue = this.getFormData()
 		let currentID = patientValue.ID
 		for(let i=0;i<patientsData.length;i++){
 			if(patientsData[i].ID == currentID){
@@ -85,21 +53,13 @@ class PatientEdit {
 			}
 		}
 		patientList.RenderTable()
-		this.resetControls()
 	}
-		
-	AddPatientData = () => {
-		let data = this.getControlData()
-		let templateText = $("#patient-list-template").html()
-		let RendertemplateFun = templateEngine.Rendertemplate(templateText, data)
-		$(".patient-table-data").append(RendertemplateFun)
-		console.log("add",data)
-		this.resetControls()
-	}		
-
-	resetControls(){
-		$(".patient-form")[0].reset()
-	}
-
+	// onAddPatientData = () => {
+	// 	let data = this.getFormData()
+	// 	let templateText = $("#patient-list-template").html()
+	// 	patientList.obj.push(data)
+	// 	let RendertemplateFun = templateEngine.Rendertemplate(templateText, data)
+	// 	$(".patient-table-data").append(RendertemplateFun)
+	// }
 }
 var patientEdit = new PatientEdit()

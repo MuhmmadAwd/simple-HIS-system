@@ -1,6 +1,6 @@
 class PatientList {
 	constructor(){
-		this.patientID = 0;
+		this.currentRow=null
 	}
 	init() {
 		this.RenderTable()
@@ -15,17 +15,32 @@ class PatientList {
 		$(document).on("click",".patient-EditBtn",this.onEditCurrentPatient)
 	}
 	AddPatient = () =>{
-		debugger
-		patientEdit.formMode = "New"
-		
+		$(".patient-save").attr("data-patient-Add-Edit","Add" )
+		patientEdit.init()
 	}
 
 	onEditCurrentPatient = (e) => {
-		debugger
 		$(".table-row").remove()
-		let currentRow = $(e.target).parents("tr")
-		this.patientID = currentRow.find(".patient-id").data("id")
-		patientEdit.open(e)
+		this.getcurrentPatientData(e)
+		router.navigate(e)
+		patientEdit.setFormData(e)
+		patientEdit.init();
+		// $(".patient-save").attr("data-patient-Add-Edit","Edit" )
+		
+		
+	}
+
+	getcurrentPatientData = (e) => {
+		this.currentRow = $(e.target).parents("tr")
+		let currentRowData = null
+		let currentID = this.currentRow.find(".patient-id").data("id")
+		for(let i=0;i<patientsData.length;i++){
+			if(patientsData[i].ID == currentID){
+				currentRowData = patientsData[i]
+			}
+		}
+		console.log(currentRowData)
+		return currentRowData
 	}
 
 }
