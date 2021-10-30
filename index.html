@@ -83,15 +83,10 @@
           <h2>patient Edit</h2>
           <form class="patient-form row py-3">
             <div class="id-div col-md-6 py-2">
-              <div class="row id-input">
-                <label hidden class="col-md-2 col-form-label">ID:</label>
+              <div class="row">
+                <label class="col-md-2 col-form-label">ID:</label>
                 <div class="col-md-10">
-                  <input
-                    hidden
-                    type="number"
-                    class="form-control id-input"
-                    required
-                  />
+                  <input type="number" class="form-control id-input" required />
                 </div>
               </div>
             </div>
@@ -217,7 +212,6 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
-                    disabled
                   >
                     <option value="today">today</option>
                     <option
@@ -227,10 +221,7 @@
                       Tue Dec 23 2014 00:00:00 GMT+0200 (توقيت شرق أوروبا
                       الرسمي)
                     </option>
-                    <option class="option2" value="1">
-                      Tue Dec 23 2014 00:00:00 GMT+0200 (توقيت شرق أوروبا
-                      الرسمي)
-                    </option>
+                    <option class="option2" value="1">by zak sosi</option>
                     <option
                       class="option3"
                       value="Tue Dec 24 2014 00:00:00 GMT+0200 (توقيت شرق أوروبا الرسمي)"
@@ -251,26 +242,12 @@
             >
               ok
             </button>
-            <button class="patient-warning btn btn-danger">Delete</button>
-          </div>
-          <div
-            class="alert warning-alert alert-danger alert-dismissible my-2 w-50"
-            role="alert"
-            id="liveAlert"
-          >
-            <strong>wait! are you sure </strong>
             <button
-              class="patient-delete btn btn-danger mx-2 router-link"
+              class="patient-Cancel btn btn-danger mx-2 router-link"
               data-component=".patient-list"
             >
-              Delete
+              Cancel
             </button>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              aria-label="Close"
-            ></button>
           </div>
         </div>
         <!-- ************************************************************************************* -->
@@ -307,15 +284,16 @@
         <!-- *********************** users-edit *************************************************  -->
       </div>
     </div>
-    <script src="./app/data/task1_patientsData.js"></script>
+    <script src="./app/data/patientsData_JSON.js"></script>
     <script src="./app-module/jquery/jquery.js"></script>
     <script src="./app-module/bootstrap/bootstrap.min.js"></script>
-    <script src="./app/utility/routerEngine.js"></script>
-    <script src="./app/utility/templateEngine.js"></script>
-    <script src="./app/patient/patientList.js"></script>
-    <script src="./app/patient/patientEdit.js"></script>
-    <script src="./app/user/userList.js"></script>
-    <script src="./app/user/userEdit.js"></script>
+    <script src="./app/utility/data-service.js"></script>
+    <script src="./app/utility/router-engine.js"></script>
+    <script src="./app/utility/template-engine.js"></script>
+    <script src="./app/patient/patient-list.js"></script>
+    <script src="./app/patient/patient-edit.js"></script>
+    <script src="./app/user/user-list.js"></script>
+    <script src="./app/user/user-edit.js"></script>
     <script src="./app/main.js"></script>
   </body>
 </html>
