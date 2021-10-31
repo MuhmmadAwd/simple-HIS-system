@@ -83,10 +83,15 @@
           <h2>patient Edit</h2>
           <form class="patient-form row py-3">
             <div class="id-div col-md-6 py-2">
-              <div class="row">
-                <label class="col-md-2 col-form-label">ID:</label>
+              <div class="row id-input">
+                <label hidden class="col-md-2 col-form-label">ID:</label>
                 <div class="col-md-10">
-                  <input type="number" class="form-control id-input" required />
+                  <input
+                    hidden
+                    type="number"
+                    class="form-control id-input"
+                    required
+                  />
                 </div>
               </div>
             </div>
@@ -212,6 +217,7 @@
                   <select
                     class="form-select"
                     aria-label="Default select example"
+                    disabled
                   >
                     <option value="today">today</option>
                     <option
@@ -221,7 +227,10 @@
                       Tue Dec 23 2014 00:00:00 GMT+0200 (توقيت شرق أوروبا
                       الرسمي)
                     </option>
-                    <option class="option2" value="1">by zak sosi</option>
+                    <option class="option2" value="1">
+                      Tue Dec 23 2014 00:00:00 GMT+0200 (توقيت شرق أوروبا
+                      الرسمي)
+                    </option>
                     <option
                       class="option3"
                       value="Tue Dec 24 2014 00:00:00 GMT+0200 (توقيت شرق أوروبا الرسمي)"
@@ -242,12 +251,26 @@
             >
               ok
             </button>
+            <button class="patient-warning btn btn-danger">Delete</button>
+          </div>
+          <div
+            class="alert warning-alert alert-danger alert-dismissible my-2 w-50"
+            role="alert"
+            id="liveAlert"
+          >
+            <strong>wait! are you sure </strong>
             <button
-              class="patient-Cancel btn btn-danger mx-2 router-link"
+              class="patient-delete btn btn-danger mx-2 router-link"
               data-component=".patient-list"
             >
-              Cancel
+              Delete
             </button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
           </div>
         </div>
         <!-- ************************************************************************************* -->

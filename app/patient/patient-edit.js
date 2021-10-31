@@ -4,22 +4,14 @@ class PatientEdit {
     this.formMode = "";
   }
   init = () => {
-<<<<<<< HEAD:app/patient/patient-edit.js
     dataService.initEvent();
-=======
-    $(".patient-save").click(this.onSaveClick);
->>>>>>> parent of 0fb558f... 14) Data-Service :: Add (Data) Methods:app/patient/patientEdit.js
   };
 
   open(patientID) {
     this.patientID = patientID;
     if (patientID) {
       this.formMode = "Edit";
-<<<<<<< HEAD:app/patient/patient-edit.js
       let patientObj = dataService.getById(patientID);
-=======
-      let patientObj = this.getPatientObj(patientID);
->>>>>>> parent of 0fb558f... 14) Data-Service :: Add (Data) Methods:app/patient/patientEdit.js
       this.LoadControlData(patientObj);
     } else {
       this.formMode = "New";
@@ -27,18 +19,6 @@ class PatientEdit {
     }
 
     router.navigate(".patient-edit");
-  }
-
-  resetControls() {
-    $(".id-input").val("");
-    $(".fname-input").val("");
-    $(".mname-input").val("");
-    $(".lname-input").val("");
-    $(".email-input").val("");
-    $(`.gender-input[value = ""]`);
-    $(".date-input").val("");
-    $(`.active-input[value = ""]`);
-    $(`.form-select option[value = "today"]`).attr("selected", "selected");
   }
 
   GetControlsData = () => {
@@ -78,7 +58,6 @@ class PatientEdit {
     $(`.form-select option[value = 1]`).attr("selected", "selected");
   };
 
-<<<<<<< HEAD:app/patient/patient-edit.js
   resetControls() {
     $(".id-input").val("");
     $(".fname-input").val("");
@@ -90,51 +69,9 @@ class PatientEdit {
     $(`.active-input[value = ""]`);
     $(`.form-select option[value = "today"]`).attr("selected", "selected");
   }
-=======
-  // -----------------------------------------------------------------
-  // ******** data functions ************
-  // -----------------------------------------------------------------
-
-  onSaveClick = () => {
-    if (this.formMode == "Edit") {
-      let patientValue = this.GetControlsData();
-      let currentID = patientValue.ID;
-      for (let i = 0; i < patientsData.length; i++) {
-        if (patientsData[i].ID == currentID) {
-          patientsData[i].ID = currentID;
-          patientsData[i].fname = patientValue.fname;
-          patientsData[i].mname = patientValue.mname;
-          patientsData[i].lname = patientValue.lname;
-          patientsData[i].email = patientValue.email;
-          patientsData[i].DOB = patientValue.DOB;
-          patientsData[i].gender = patientValue.gender;
-          patientsData[i].creationDate = patientValue.creationDate;
-          patientsData[i].Active = patientValue.Active;
-        }
-      }
-    } else if (this.formMode == "New") {
-      let data = this.GetControlsData();
-      data.ID = patientsData[patientsData.length - 1].ID + 1;
-      let templateText = $("#patient-list-template").html();
-      let RendertemplateFun = templateEngine.Rendertemplate(templateText, data);
-      $(".patient-table-data").append(RendertemplateFun);
-    }
-    router.navigate(".patient-list");
-  };
-
-  getPatientObj = (patientID) => {
-    let PatientObj = null;
-    for (let i = 0; i < patientsData.length; i++) {
-      if (patientsData[i].ID == patientID) {
-        PatientObj = patientsData[i];
-      }
-    }
-    return PatientObj;
-  };
->>>>>>> parent of 0fb558f... 14) Data-Service :: Add (Data) Methods:app/patient/patientEdit.js
 
   // -------------------------------------------------------------------------
-  // ***********  getPatientObj  *******************
+  // ***********  getById  *******************
   // -------------------------------------------------------------------------
 }
 var patientEdit = new PatientEdit();
