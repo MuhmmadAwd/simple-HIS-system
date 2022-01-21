@@ -4,42 +4,57 @@ class dataServiceClass {
     $(".patient-edit .patient-warning").click(this.onBeforeDeleteClick);
     $(".patient-delete").click(this.onDeleteClick);
   }
-
-  onSaveClick = () => {
-    let data = this.GetControlsData();
-    if (this.formMode == "Edit") {
-      let currentID = data.ID;
-      let index = this.getIndexById(currentID);
-      patientsData[index].fname = data.fname;
-      patientsData[index].mname = data.mname;
-      patientsData[index].lname = data.lname;
-      patientsData[index].email = data.email;
-      patientsData[index].DOB = data.DOB;
-      patientsData[index].gender = data.gender;
-      patientsData[index].Active = data.Active;
-    } else if (this.formMode == "New") {
-      data.ID = this.getNewID();
-      let templateText = $("#patient-list-template").html();
-      let RendertemplateFun = templateEngine.Rendertemplate(templateText, data);
-      $(".patient-table-data").append(RendertemplateFun);
-    }
-    router.navigate(".patient-list");
-  };
-
   onBeforeDeleteClick() {
     $(".warning-alert").show();
   }
 
+  onDeleteClick = () => {
+    $(".warning-alert").hide();
+    let index = this.getIndexById(patientID);
+    let patientObj = patientsData[index];
+    patientsData.splice(index, 1);
+    toastr.success("Items deleted successfully");
+
+    return patientObj;
+  };
+
+  onSaveClick = () => {
+    let data = patientEdit.GetControlsData();
+    let ValidateForm = _ValidationEngine.ValidateForm();
+    if (!ValidateForm) {
+      toastr.error("saving did fail");
+      return;
+    } else {
+      if (formMode == "Edit") {
+        let patient = this.getById(patientID)
+        patient.fname = data.fname;
+        patient.mname = data.mname;
+        patient.lname = data.lname;
+        patient.email = data.email;
+        patient.DOB = data.DOB;
+        patient.gender = data.gender;
+        patient.Active = data.Active;
+        toastr.success("Items modified successfully");
+      } else if (formMode == "New") {
+        data.ID = patientsData[patientsData.length - 1].ID + 1
+        patientsData.push(data)
+        toastr.success("Items added successfully");
+      }
+      patientList.show()
+
+    }
+  };
+
   getAll() {
     return patientsData;
   }
-
   getById = (patientID) => {
-    for (let i = 0; i < patientsData.length; i++) {
-      if (patientsData[i].ID == patientID) {
-        return patientsData[i];
-      }
-    }
+    let index = this.getIndexById(patientID);
+    let DOB = patientsData[index].DOB;
+    let FormatDate = moment(DOB).format("YYYY-MM-DD");
+
+    patientsData[index].DOB = FormatDate;
+    return patientsData[index];
   };
   getIndexById = (patientID) => {
     for (let i = 0; i < patientsData.length; i++) {
@@ -48,20 +63,27 @@ class dataServiceClass {
       }
     }
   };
-  getNewID = (patientID) => {
-    for (let i = 0; i < patientsData.length; i++) {
-      if (patientsData[i].ID == patientID) {
-        return patientsData[patientsData.length].ID;
-      }
-    }
-  };
-  onDeleteClick = () => {
-    $(".warning-alert").hide();
-    let patientID = this.patientID;
-    let index = this.getIndexById(patientID);
-    let patientObj = patientsData[index];
-    patientsData.splice(index, 1);
-    return patientObj;
-  };
+
 }
 let dataService = new dataServiceClass();
+
+/************
+    let validateDate = moment(DOBValue, "DD-MM-YYYY").isValid();
+    if (!validateDate) {
+      isValid = false;
+      this.validateRequireField(".DOB-input", ".DOB-span");
+    }
+
+    let status = $(".status-input:checked");
+    if (status.length < 1) {
+      isValid = false;
+      this.validateRequireField(".status-input", ".status-span");
+    }
+
+    let gender = $(".gender-input:checked");
+    if (gender.length < 1) {
+      isValid = false;
+      this.validateRequireField(".gender-input", ".gender-span");
+    }
+
+***************/

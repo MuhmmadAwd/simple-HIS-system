@@ -5,7 +5,8 @@ class PatientList {
   }
   initEvents() {
     $(".patient-list .patient-add").click(this.AddPatient);
-    $(".patient-list .patient-EditBtn").click(this.onEditCurrentPatient);
+    // $(".patient-list .patient-EditBtn").click(this.onEditCurrentPatient);
+    $(document).on("click", ".patient-EditBtn", this.onEditCurrentPatient)
   }
   RenderTable() {
     $(".table-row").remove();
@@ -26,8 +27,8 @@ class PatientList {
 
   onEditCurrentPatient = (e) => {
     let currentRow = $(e.target).closest("tr");
-    let currentID = currentRow.find(".patient-id").data("id");
-    patientEdit.open(currentID);
+    patientID = currentRow.data("id");
+    patientEdit.open(patientID);
   };
 }
 var patientList = new PatientList();

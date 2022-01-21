@@ -5,6 +5,7 @@ class RouterEngine {
   onRouterLinkClick = (e) => {
     $(".screen").hide();
     let dataComponent = $(e.target).data("component");
+
     this.navigate(dataComponent);
   };
 
